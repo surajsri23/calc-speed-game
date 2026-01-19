@@ -193,7 +193,12 @@ Built for SSC & Banking aspirants
 
 If you like this project, give it a ⭐ on GitHub and share it with friends preparing for competitive exams!
 
+---
+## 📜 License
 
+This project is licensed under the **MIT License**.
+
+© 2026 Suraj Srivastav. All rights reserved.
 
 
 
