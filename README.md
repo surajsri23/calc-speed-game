@@ -38,7 +38,7 @@ Boost your mental math speed with a fun, level-based game that includes mixed qu
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/calc-speed-game.git
+git clone https://github.com/surajsri23/calc-speed-game.git
 cd calc-speed-game
 ````
 
