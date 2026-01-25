@@ -154,7 +154,7 @@ static/sounds/
 ## 👨‍💻 Author
 
 **Suraj Srivastav**
-B.Tech CSE | SSC & Banking Aspirant | Python Developer
+B.Tech CSE  | Python Developer
 
 GitHub:
 👉 [https://github.com/surajsri23](https://github.com/surajsri23)
