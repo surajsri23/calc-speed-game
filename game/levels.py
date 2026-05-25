@@ -1,50 +1,148 @@
-from game.question_generator import generate, allowed_topics
+# ================= LEVEL CONFIG =================
 
-# ======================================
-# TIMER LOGIC (MONOTONIC INCREASE)
-# ======================================
-def time_for_level(level: int) -> int:
-    if level <= 3:
-        return 40
-    if level <= 6:
-        return 45
-    if level <= 10:
-        return 50
-    if level <= 15:
-        return 55
-    return 60
+LEVELS = {
 
+    # ================= EASY =================
 
-# ======================================
-# QUESTION COUNT RULES
-# ======================================
-def questions_for_mode(mode: str) -> int:
-    if mode == "daily":
-        return 10
-    if mode == "mock":
-        return 50
-    return 20  # practice default
+    1: {
+        "name": "Starter",
+        "topics": ["addition"],
+        "time": 12,
+        "points": 10
+    },
 
+    2: {
+        "name": "Beginner",
+        "topics": ["addition", "subtraction"],
+        "time": 12,
+        "points": 10
+    },
 
-# ======================================
-# PRACTICE / DAILY / MOCK GENERATOR
-# ======================================
-def generate_questions(level: int, qtype: str="mixed", mode: str="practice"):
-    count = questions_for_mode(mode)
+    3: {
+        "name": "Quick Solver",
+        "topics": ["addition", "subtraction"],
+        "time": 13,
+        "points": 12
+    },
 
-    questions = []
-    answers = []
-    topics = []
+    4: {
+        "name": "Fast Brain",
+        "topics": ["addition", "subtraction", "multiplication"],
+        "time": 14,
+        "points": 15
+    },
 
-    for _ in range(count):
-        q = generate(level, qtype)
-        questions.append({"question": q["question"]})
-        answers.append(q["answer"])
-        topics.append(q["topic"])
+    5: {
+        "name": "Speed Runner",
+        "topics": ["addition", "subtraction", "multiplication"],
+        "time": 14,
+        "points": 15
+    },
 
-    return {
-        "questions": questions,
-        "answers": answers,
-        "topics": topics,
-        "time": time_for_level(level)
+    # ================= INTERMEDIATE =================
+
+    10: {
+        "name": "Intermediate Master",
+        "topics": [
+            "addition",
+            "subtraction",
+            "multiplication",
+            "division"
+        ],
+        "time": 16,
+        "points": 20
+    },
+
+    15: {
+        "name": "Calculation Pro",
+        "topics": [
+            "multiplication",
+            "division",
+            "percentage",
+            "square"
+        ],
+        "time": 18,
+        "points": 25
+    },
+
+    20: {
+        "name": "Mental Warrior",
+        "topics": [
+            "multiplication",
+            "division",
+            "percentage",
+            "square"
+        ],
+        "time": 18,
+        "points": 30
+    },
+
+    # ================= ADVANCED =================
+
+    25: {
+        "name": "SSC Challenger",
+        "topics": [
+            "square",
+            "cube",
+            "percentage",
+            "bodmas"
+        ],
+        "time": 20,
+        "points": 35
+    },
+
+    30: {
+        "name": "Banking Expert",
+        "topics": [
+            "square",
+            "cube",
+            "percentage",
+            "bodmas"
+        ],
+        "time": 20,
+        "points": 40
     }
+
+}
+
+# ================= DEFAULT RULE =================
+
+DEFAULT_LEVEL = {
+
+    "name": "Grand Master",
+
+    "topics": [
+        "addition",
+        "subtraction",
+        "multiplication",
+        "division",
+        "square",
+        "cube",
+        "percentage",
+        "bodmas"
+    ],
+
+    "time": 22,
+
+    "points": 50
+
+}
+
+# ================= GET LEVEL DATA =================
+
+def get_level_data(level):
+
+    if level in LEVELS:
+        return LEVELS[level]
+
+    closest = 1
+
+    for lvl in LEVELS.keys():
+
+        if lvl <= level:
+            closest = lvl
+
+    return LEVELS.get(
+        closest,
+        DEFAULT_LEVEL
+    )

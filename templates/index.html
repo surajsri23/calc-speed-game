@@ -1,195 +1,658 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Calc Speed Challenge</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Calc Speed Challenge
+  </title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+
+    body{
+      background:
+      radial-gradient(circle at top,#172554 0%,#020617 45%);
+    }
+
+    .glass{
+      background: rgba(15,23,42,.72);
+      backdrop-filter: blur(14px);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .card-hover{
+      transition:.25s ease;
+    }
+
+    .card-hover:hover{
+      transform: translateY(-4px);
+      box-shadow:0 0 25px rgba(34,197,94,.18);
+    }
+
+    .fade-in{
+      animation:fade .35s ease;
+    }
+
+    @keyframes fade{
+
+      from{
+        opacity:0;
+        transform:translateY(10px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0px);
+      }
+
+    }
+
+    .timer-ring{
+      transition: stroke-dashoffset .9s linear;
+    }
+
+    .topic-btn.active{
+      background:#22c55e;
+      color:black;
+      font-weight:bold;
+    }
+
+  </style>
+
 </head>
 
-<body class="bg-gradient-to-br from-slate-950 to-slate-900 text-slate-100 min-h-screen font-inter flex flex-col">
+<body class="text-white min-h-screen flex flex-col">
 
-<!-- ================= HEADER ================= -->
-<header class="bg-slate-950 border-b border-slate-800 px-4 py-3">
-  <div class="flex justify-between items-center">
-    <div class="font-semibold text-lg">Calc Speed Challenge</div>
 
-    <!-- Analytics in Navbar -->
-    <nav class="hidden md:flex gap-6 text-sm text-slate-300">
-      <div>Strong: <span id="strong-topic" class="text-emerald-400">—</span></div>
-      <div>Weak: <span id="weak-topic" class="text-rose-400">—</span></div>
-      <div>Avg: <span id="avg-time" class="text-indigo-400">—</span>s</div>
-    </nav>
 
-    <button onclick="goDashboard()" class="text-sm text-slate-400 hover:text-white">
+<header class="w-full border-b border-slate-800 bg-slate-950/70 backdrop-blur sticky top-0 z-50">
+
+  <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+
+    <div>
+
+      <h1 class="text-2xl font-black tracking-wide">
+        ⚡ Calc Speed Challenge
+      </h1>
+
+      <p class="text-xs text-slate-400 mt-1">
+        SSC • Banking • Railway • Competitive Exams
+      </p>
+
+    </div>
+
+    <button
+      onclick="goDashboard()"
+      class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-xl text-sm transition">
+
       Dashboard
+
     </button>
+
   </div>
 
-  <!-- Republic Day Banner -->
-  <div id="republic-banner"
-       class="mt-3 rounded-lg p-3 text-center bg-gradient-to-r from-orange-500 via-white to-green-600 text-slate-900">
-    <p class="text-xs uppercase tracking-widest font-semibold">
-      Republic Day Special 🇮🇳
-    </p>
-    <p class="text-sm font-medium">
-      “Strong minds build a strong nation. Train your speed. Sharpen your logic.”
-    </p>
-  </div>
 </header>
 
-<!-- ================= MAIN ================= -->
-<main class="flex-1 flex items-center justify-center px-3">
 
-<!-- USERNAME -->
-<section id="username-screen" class="hidden w-full max-w-sm text-center">
-  <h1 class="text-2xl font-bold mb-2">Welcome Aspirant</h1>
-  <input id="username-input"
-    class="w-full p-3 rounded-lg text-black text-center"
-    placeholder="Enter your name"
-    onkeydown="if(event.key==='Enter') saveUsername()" />
-  <button onclick="saveUsername()"
-    class="mt-4 w-full bg-indigo-500 py-3 rounded-lg">
-    Start Practice
-  </button>
-</section>
+<main class="flex-1 flex items-center justify-center px-4 py-8">
 
-<!-- DASHBOARD -->
-<section id="dashboard" class="hidden w-full max-w-md text-center space-y-6">
-  <div>
-    <h2 id="welcome-text" class="text-xl font-semibold"></h2>
+
+<section
+id="username-screen"
+class="w-full max-w-md fade-in">
+
+<div class="glass rounded-3xl p-8 text-center shadow-2xl">
+
+  <div class="mb-6">
+
+    <div class="text-6xl mb-5">
+      ⚡
+    </div>
+
+    <h2 class="text-3xl font-bold mb-2">
+      Welcome Challenger
+    </h2>
+
     <p class="text-slate-400">
-      Total Points:
-      <span id="total-points" class="font-bold text-white"></span>
+      Train your calculation speed daily
     </p>
+
   </div>
 
-  <div class="space-y-3">
-    <button onclick="showTopicSelector()" class="w-full bg-indigo-500 py-3 rounded-lg">
-      Practice Mode
-    </button>
-    <button onclick="startDailyQuiz()" class="w-full bg-amber-400 text-black py-3 rounded-lg">
-      Daily Quiz
-    </button>
-    <button onclick="startMockExam()" class="w-full bg-slate-700 py-3 rounded-lg">
-      Mock Exam
-    </button>
-    <button onclick="showLeaderboard()" class="w-full bg-slate-800 py-3 rounded-lg">
-      Leaderboard
-    </button>
-  </div>
-</section>
+  <input
+    id="username-input"
+    type="text"
+    placeholder="Enter your name"
+    class="w-full bg-slate-900 border border-slate-700 rounded-2xl p-4 text-center outline-none focus:border-green-400"
+    onkeydown="if(event.key==='Enter') saveUsername()"
+  >
 
-<!-- TOPIC SELECTOR -->
-<section id="topic-selector" class="hidden w-full max-w-md text-center space-y-4">
-  <h2 class="text-lg font-semibold">Select Topic</h2>
-  <div class="grid grid-cols-3 gap-3">
-    <button class="topic-btn" onclick="selectTopic('add')">Add</button>
-    <button class="topic-btn" onclick="selectTopic('sub')">Sub</button>
-    <button class="topic-btn" onclick="selectTopic('mul')">Mul</button>
-    <button class="topic-btn" onclick="selectTopic('div')">Div</button>
-    <button class="topic-btn" onclick="selectTopic('square')">Square</button>
-    <button class="topic-btn" onclick="selectTopic('cube')">Cube</button>
-    <button class="topic-btn" onclick="selectTopic('percent')">Percent</button>
-    <button class="topic-btn" onclick="selectTopic('bodmas')">BODMAS</button>
-    <button class="topic-btn" onclick="selectTopic('mixed')">Mixed</button>
-  </div>
-  <button onclick="showLevelMap()" class="mt-4 bg-slate-700 px-6 py-2 rounded-lg">
-    Continue
+  <button
+    onclick="saveUsername()"
+    class="w-full mt-5 bg-green-500 hover:bg-green-400 text-black font-bold py-4 rounded-2xl transition">
+
+    Start Training
+
   </button>
+
+</div>
+
 </section>
 
-<!-- LEVEL MAP -->
-<section id="level-map" class="hidden w-full max-w-md text-center">
-  <h2 class="text-lg mb-3">Select Level</h2>
-  <div id="levels-container" class="grid grid-cols-5 gap-3 mb-4"></div>
-  <button onclick="goDashboard()" class="text-slate-400 text-sm">← Back</button>
+<section
+id="dashboard"
+class="hidden w-full max-w-6xl fade-in">
+
+<div class="grid lg:grid-cols-3 gap-6">
+
+  <!-- LEFT -->
+
+  <div class="glass rounded-3xl p-6">
+
+    <div class="flex items-center gap-4">
+
+      <div class="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center text-black text-2xl font-bold">
+
+        S
+
+      </div>
+
+      <div>
+
+        <h2
+        id="welcome-text"
+        class="text-2xl font-bold">
+        </h2>
+
+        <p class="text-slate-400 text-sm">
+          Keep practicing daily
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mt-8">
+
+      <div class="bg-slate-900 rounded-2xl p-4">
+
+        <div class="text-slate-400 text-sm">
+          Total Points
+        </div>
+
+        <div
+        id="total-points"
+        class="text-3xl font-black mt-2">
+
+          0
+
+        </div>
+
+      </div>
+
+      <div class="bg-slate-900 rounded-2xl p-4">
+
+        <div class="text-slate-400 text-sm">
+          Highest Level
+        </div>
+
+        <div
+        id="highest-level"
+        class="text-3xl font-black mt-2">
+
+          1
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  
+
+  <div class="lg:col-span-2 grid md:grid-cols-3 gap-5">
+
+    <button
+      onclick="showLevelMap()"
+      class="glass rounded-3xl p-7 text-left card-hover">
+
+      <div class="text-4xl mb-4">
+        📘
+      </div>
+
+      <h3 class="text-xl font-bold mb-2">
+        Practice Levels
+      </h3>
+
+      <p class="text-slate-400 text-sm">
+        Improve speed level-by-level
+      </p>
+
+    </button>
+
+    <button
+      onclick="startDailyQuiz()"
+      class="glass rounded-3xl p-7 text-left card-hover">
+
+      <div class="text-4xl mb-4">
+        🏆
+      </div>
+
+      <h3 class="text-xl font-bold mb-2">
+        Daily Quiz
+      </h3>
+
+      <p class="text-slate-400 text-sm">
+        10 new questions everyday
+      </p>
+
+    </button>
+
+    <button
+      onclick="showLeaderboard()"
+      class="glass rounded-3xl p-7 text-left card-hover">
+
+      <div class="text-4xl mb-4">
+        📊
+      </div>
+
+      <h3 class="text-xl font-bold mb-2">
+        Leaderboard
+      </h3>
+
+      <p class="text-slate-400 text-sm">
+        Compete with top players
+      </p>
+
+    </button>
+
+  </div>
+
+</div>
+
 </section>
 
-<!-- ================= GAME SCREEN ================= -->
-<section id="game-screen" class="hidden w-full max-w-xl">
 
-  <div class="flex justify-between items-center mb-3">
+
+<section
+id="level-map"
+class="hidden w-full max-w-5xl fade-in">
+
+<div class="glass rounded-3xl p-8">
+
+  <div class="flex items-center justify-between mb-8">
+
     <div>
-      <div id="mode-label" class="text-xs text-slate-400"></div>
-      <div id="topic-label" class="text-sm font-semibold"></div>
+
+      <h2 class="text-3xl font-bold">
+        Select Level
+      </h2>
+
+      <p class="text-slate-400 mt-1">
+        Unlock levels one by one
+      </p>
+
     </div>
-    <button onclick="quitGame()" class="text-rose-400 text-sm">Quit</button>
+
+    <button
+      onclick="goDashboard()"
+      class="bg-slate-800 hover:bg-slate-700 px-5 py-3 rounded-xl">
+
+      Back
+
+    </button>
+
   </div>
 
-  <!-- TIMER -->
-  <div class="flex justify-center mb-3">
-    <div class="w-14 h-14 relative">
-      <svg class="-rotate-90" width="56" height="56">
-        <circle cx="28" cy="28" r="24" stroke="#334155" stroke-width="6" fill="none"/>
-        <circle id="timer-circle" cx="28" cy="28" r="24"
-          stroke="#22c55e" stroke-width="6" fill="none"
-          stroke-dasharray="150" stroke-dashoffset="0"/>
+
+  <div class="mb-8">
+
+    <h3 class="text-lg font-bold mb-4">
+      Select Topic
+    </h3>
+
+    <div class="flex flex-wrap gap-3">
+
+      <button class="topic-btn active bg-slate-800 px-4 py-2 rounded-xl" onclick="setTopic('mixed',this)">
+        Mixed
+      </button>
+
+      <button class="topic-btn bg-slate-800 px-4 py-2 rounded-xl" onclick="setTopic('addition',this)">
+        Addition
+      </button>
+
+      <button class="topic-btn bg-slate-800 px-4 py-2 rounded-xl" onclick="setTopic('subtraction',this)">
+        Subtraction
+      </button>
+
+      <button class="topic-btn bg-slate-800 px-4 py-2 rounded-xl" onclick="setTopic('multiplication',this)">
+        Multiplication
+      </button>
+
+      <button class="topic-btn bg-slate-800 px-4 py-2 rounded-xl" onclick="setTopic('division',this)">
+        Division
+      </button>
+
+      <button class="topic-btn bg-slate-800 px-4 py-2 rounded-xl" onclick="setTopic('percentage',this)">
+        Percentage
+      </button>
+
+      <button class="topic-btn bg-slate-800 px-4 py-2 rounded-xl" onclick="setTopic('square',this)">
+        Square
+      </button>
+
+      <button class="topic-btn bg-slate-800 px-4 py-2 rounded-xl" onclick="setTopic('cube',this)">
+        Cube
+      </button>
+
+      <button class="topic-btn bg-slate-800 px-4 py-2 rounded-xl" onclick="setTopic('bodmas',this)">
+        BODMAS
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <div
+    id="levels-container"
+    class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+  </div>
+
+</div>
+
+</section>
+
+
+<section
+id="game-screen"
+class="hidden w-full max-w-3xl fade-in">
+
+<div class="glass rounded-3xl p-6 md:p-10">
+
+
+  <div class="flex items-center justify-between mb-10">
+
+    <div>
+
+      <div
+        id="level"
+        class="text-2xl font-black">
+      </div>
+
+      <div
+        id="score"
+        class="text-slate-400 mt-1">
+      </div>
+
+      <div
+        id="streak"
+        class="text-orange-400 mt-2 text-sm font-semibold">
+      </div>
+
+    </div>
+
+
+    <div class="relative w-24 h-24">
+
+      <svg width="96" height="96" class="-rotate-90">
+
+        <circle
+          cx="48"
+          cy="48"
+          r="40"
+          stroke="#1e293b"
+          stroke-width="8"
+          fill="none"
+        />
+
+        <circle
+          id="timer-circle"
+          cx="48"
+          cy="48"
+          r="40"
+          stroke="#22c55e"
+          stroke-width="8"
+          fill="none"
+          stroke-linecap="round"
+          stroke-dasharray="251"
+          stroke-dashoffset="0"
+          class="timer-ring"
+        />
+
       </svg>
-      <div id="timer-text"
-           class="absolute inset-0 flex items-center justify-center text-sm font-bold"></div>
+
+      <div
+        id="timer-text"
+        class="absolute inset-0 flex items-center justify-center text-2xl font-black">
+
+        15
+
+      </div>
+
     </div>
+
   </div>
 
-  <!-- QUESTION CARD -->
-  <div class="bg-slate-800 rounded-2xl p-6 text-center">
-    <div id="question" class="text-3xl font-bold mb-5"></div>
-    <input id="answer"
+
+  <div class="w-full bg-slate-800 rounded-full h-3 mb-10 overflow-hidden">
+
+    <div
+      id="progress-bar"
+      class="bg-green-500 h-3 rounded-full transition-all duration-300"
+      style="width:0%">
+    </div>
+
+  </div>
+
+
+  <div class="bg-white rounded-3xl p-10 text-center shadow-2xl">
+
+    <div
+      id="question"
+      class="text-black text-5xl md:text-6xl font-black tracking-wide mb-8">
+
+      12 + 7
+
+    </div>
+
+    <input
+      id="answer"
+      type="text"
       inputmode="numeric"
-      class="bg-slate-900 border border-slate-600 p-3 text-xl text-center w-40 rounded-lg"
-      oninput="checkAnswer()" />
+      placeholder="Answer"
+      autocomplete="off"
+      class="w-52 max-w-full bg-slate-100 border-2 border-slate-300 rounded-2xl p-4 text-center text-black text-3xl outline-none focus:border-green-500"
+      oninput="checkAnswer()"
+    >
+
+    <button
+      onclick="quitGame()"
+      class="block mx-auto mt-8 text-slate-500 hover:text-red-400 transition">
+
+      Quit Session
+
+    </button>
+
   </div>
 
-  <div id="score" class="text-center text-slate-400 mt-3"></div>
+</div>
+
 </section>
 
-<!-- GAME OVER -->
-<section id="game-over-screen" class="hidden text-center">
-  <h2 class="text-xl mb-3">Session Ended</h2>
-  <p id="final-score"></p>
-  <button onclick="goDashboard()" class="mt-4 bg-indigo-500 px-6 py-2 rounded-lg">
-    Dashboard
-  </button>
+
+<section
+id="result-screen"
+class="hidden w-full max-w-2xl fade-in">
+
+<div class="glass rounded-3xl p-8">
+
+    <div class="text-center mb-10">
+
+        <div class="text-6xl mb-4">
+            🏆
+        </div>
+
+        <h2
+        id="result-title"
+        class="text-4xl font-black">
+
+            Level Complete
+
+        </h2>
+
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5 mb-8">
+
+        <div class="bg-slate-900 rounded-2xl p-5">
+
+            <div class="text-slate-400 text-sm">
+                Final Score
+            </div>
+
+            <div
+            id="result-score"
+            class="text-4xl font-black mt-2">
+
+                0
+
+            </div>
+
+        </div>
+
+        <div class="bg-slate-900 rounded-2xl p-5">
+
+            <div class="text-slate-400 text-sm">
+                Accuracy
+            </div>
+
+            <div
+            id="result-accuracy"
+            class="text-4xl font-black mt-2">
+
+                0%
+
+            </div>
+
+        </div>
+
+        <div class="bg-slate-900 rounded-2xl p-5">
+
+            <div class="text-slate-400 text-sm">
+                Correct Answers
+            </div>
+
+            <div
+            id="result-correct"
+            class="text-4xl font-black mt-2">
+
+                0
+
+            </div>
+
+        </div>
+
+        <div class="bg-slate-900 rounded-2xl p-5">
+
+            <div class="text-slate-400 text-sm">
+                Wrong Answers
+            </div>
+
+            <div
+            id="result-wrong"
+            class="text-4xl font-black mt-2">
+
+                0
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-4">
+
+        <button
+        id="next-level-btn"
+        onclick="goNextLevel()"
+        class="flex-1 bg-green-500 hover:bg-green-400 text-black font-bold py-4 rounded-2xl transition">
+
+            Next Level
+
+        </button>
+
+        <button
+        onclick="goDashboard()"
+        class="flex-1 bg-slate-800 hover:bg-slate-700 font-bold py-4 rounded-2xl transition">
+
+            Dashboard
+
+        </button>
+
+    </div>
+
+</div>
+
 </section>
 
-<!-- LEADERBOARD -->
-<section id="leaderboard-screen" class="hidden w-full max-w-md text-center">
-  <h2 class="text-lg mb-3">Leaderboard</h2>
-  <ul id="leaderboard-list" class="space-y-2"></ul>
-  <button onclick="goDashboard()" class="text-slate-400 mt-3">← Back</button>
+
+<section
+id="leaderboard-screen"
+class="hidden w-full max-w-3xl fade-in">
+
+<div class="glass rounded-3xl p-8">
+
+  <div class="flex items-center justify-between mb-8">
+
+    <div>
+
+      <h2 class="text-3xl font-black">
+        Leaderboard
+      </h2>
+
+    </div>
+
+    <button
+      onclick="goDashboard()"
+      class="bg-slate-800 hover:bg-slate-700 px-5 py-3 rounded-xl">
+
+      Back
+
+    </button>
+
+  </div>
+
+  <div
+    id="leaderboard-list"
+    class="space-y-4">
+  </div>
+
+</div>
+
 </section>
 
 </main>
 
-<!-- ================= FOOTER ================= -->
-<footer class="bg-slate-950 border-t border-slate-800 text-center text-xs text-slate-400 py-4 space-y-1">
-  <div>
-    Designed & Built by <span class="font-semibold text-white">Suraj Srivastav</span>
-  </div>
-  <div>
-    GitHub:
-    <a href="https://www.github.com/surajsri23" target="_blank"
-       class="text-indigo-400 hover:underline">
-      github.com/surajsri23
-    </a>
-  </div>
+<footer class="border-t border-slate-800 bg-slate-950/70 py-4 text-center text-slate-500 text-sm">
+
+  © 2026 Suraj Srivastav • Calc Speed Challenge
+
 </footer>
 
-<style>
-.topic-btn{
-  background:#334155;
-  padding:12px;
-  border-radius:10px;
-}
-.topic-btn.active{
-  background:#22c55e;
-  color:#020617;
-  font-weight:600;
-}
-</style>
-
 <script src="/static/js/app.js"></script>
+
 </body>
 </html>

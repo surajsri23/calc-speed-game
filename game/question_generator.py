@@ -1,118 +1,255 @@
-# game/question_generator.py
 import random
-from collections import deque
-from typing import Dict, Tuple
 
-# Keep recent questions per topic to reduce repetition (runtime only)
-RECENT = {
-    "add": deque(maxlen=15),
-    "sub": deque(maxlen=15),
-    "mul": deque(maxlen=15),
-    "div": deque(maxlen=15),
-    "square": deque(maxlen=15),
-    "cube": deque(maxlen=15),
-    "percent": deque(maxlen=15),
-    "bodmas": deque(maxlen=15),
-}
+# ================= ADDITION =================
 
-def _remember(topic: str, q: str) -> bool:
-    """Return True if question is new for topic; remember it."""
-    if q in RECENT[topic]:
-        return False
-    RECENT[topic].append(q)
-    return True
+def addition(level):
 
-
-# ---------- Range helpers ----------
-def rng(level: int, low: Tuple[int,int], mid: Tuple[int,int], high: Tuple[int,int]) -> int:
-    if level <= 3:
-        return random.randint(*low)
-    elif level <= 7:
-        return random.randint(*mid)
-    else:
-        return random.randint(*high)
-
-
-# ---------- Topic generators ----------
-def add(level):
-    a = rng(level, (5,40), (30,150), (100,999))
-    b = rng(level, (5,40), (30,150), (100,999))
-    return f"{a} + {b}", a+b
-
-def sub(level):
-    a = rng(level, (20,80), (80,300), (300,999))
-    b = rng(level, (5,40), (40,150), (150,500))
-    if b>a: a,b=b,a
-    return f"{a} - {b}", a-b
-
-def mul(level):
     if level <= 5:
-        a,b = random.randint(2,9), random.randint(2,9)
-    elif level <= 10:
-        a,b = random.randint(5,20), random.randint(5,20)
-    else:
-        a,b = random.randint(11,99), random.randint(11,99)
-    return f"{a} × {b}", a*b
 
-def div(level):
-    b = random.randint(2,9 if level<=5 else 25)
-    a = b * random.randint(2,20)
-    return f"{a} ÷ {b}", a//b
+        a = random.randint(10, 99)
+        b = random.randint(10, 99)
+
+    elif level <= 10:
+
+        a = random.randint(100, 999)
+        b = random.randint(100, 999)
+
+    elif level <= 20:
+
+        a = random.randint(1000, 9999)
+        b = random.randint(1000, 9999)
+
+    else:
+
+        a = random.randint(10000, 99999)
+        b = random.randint(10000, 99999)
+
+    return {
+        "question": f"{a} + {b}",
+        "answer": a + b
+    }
+
+# ================= SUBTRACTION =================
+
+def subtraction(level):
+
+    if level <= 5:
+
+        a = random.randint(50, 99)
+        b = random.randint(10, 49)
+
+    elif level <= 10:
+
+        a = random.randint(500, 999)
+        b = random.randint(100, 499)
+
+    elif level <= 20:
+
+        a = random.randint(5000, 9999)
+        b = random.randint(1000, 4999)
+
+    else:
+
+        a = random.randint(50000, 99999)
+        b = random.randint(10000, 49999)
+
+    return {
+        "question": f"{a} - {b}",
+        "answer": a - b
+    }
+
+# ================= MULTIPLICATION =================
+
+def multiplication(level):
+
+    if level <= 5:
+
+        a = random.randint(2, 20)
+        b = random.randint(2, 20)
+
+    elif level <= 10:
+
+        a = random.randint(10, 99)
+        b = random.randint(10, 99)
+
+    elif level <= 20:
+
+        a = random.randint(100, 999)
+        b = random.randint(10, 99)
+
+    else:
+
+        a = random.randint(100, 999)
+        b = random.randint(100, 999)
+
+    return {
+        "question": f"{a} × {b}",
+        "answer": a * b
+    }
+
+# ================= DIVISION =================
+
+def division(level):
+
+    if level <= 5:
+
+        divisor = random.randint(2, 12)
+        quotient = random.randint(2, 20)
+
+    elif level <= 10:
+
+        divisor = random.randint(5, 20)
+        quotient = random.randint(10, 50)
+
+    else:
+
+        divisor = random.randint(10, 50)
+        quotient = random.randint(20, 100)
+
+    dividend = divisor * quotient
+
+    return {
+        "question": f"{dividend} ÷ {divisor}",
+        "answer": quotient
+    }
+
+# ================= SQUARE =================
 
 def square(level):
-    if level<=3: a=random.randint(5,15)
-    elif level<=6: a=random.randint(10,30)
-    elif level<=10: a=random.randint(20,50)
-    elif level<=15: a=random.randint(35,75)
-    else: a=random.randint(50,120)
-    return f"{a}²", a*a
+
+    if level <= 10:
+
+        n = random.randint(5, 30)
+
+    elif level <= 20:
+
+        n = random.randint(30, 70)
+
+    else:
+
+        n = random.randint(70, 150)
+
+    return {
+        "question": f"{n}²",
+        "answer": n * n
+    }
+
+# ================= CUBE =================
 
 def cube(level):
-    if level<=5: a=random.randint(2,6)
-    elif level<=10: a=random.randint(3,9)
-    elif level<=15: a=random.randint(4,12)
-    else: a=random.randint(6,15)
-    return f"{a}³", a**3
 
-def percent(level):
-    base = random.choice([100,200,400,500,1000])
-    if level<=5: p=random.randint(5,30)
-    elif level<=10: p=random.randint(10,60)
-    else: p=random.randint(15,95)
-    return f"{p}% of {base}", (p*base)//100
+    if level <= 10:
+
+        n = random.randint(2, 10)
+
+    else:
+
+        n = random.randint(5, 20)
+
+    return {
+        "question": f"{n}³",
+        "answer": n ** 3
+    }
+
+# ================= PERCENTAGE =================
+
+def percentage(level):
+
+    percent = random.choice([
+        5,10,15,20,25,30,35,40,
+        45,50,60,70,75,80,90
+    ])
+
+    if level <= 10:
+
+        number = random.choice([
+            100,200,300,500,1000
+        ])
+
+    else:
+
+        number = random.choice([
+            1200,2500,5000,7500,10000
+        ])
+
+    answer = int((percent / 100) * number)
+
+    return {
+        "question": f"{percent}% of {number}",
+        "answer": answer
+    }
+
+# ================= BODMAS =================
 
 def bodmas(level):
-    a = rng(level, (5,20), (20,60), (50,120))
-    b = rng(level, (5,15), (10,30), (20,60))
-    c = random.randint(2,10)
-    return f"{a} + {b} × {c}", a + b*c
+
+    if level <= 10:
+
+        a = random.randint(5, 50)
+        b = random.randint(2, 20)
+        c = random.randint(2, 10)
+
+    else:
+
+        a = random.randint(50, 500)
+        b = random.randint(10, 50)
+        c = random.randint(5, 20)
+
+    answer = a + (b * c)
+
+    return {
+        "question": f"{a} + {b} × {c}",
+        "answer": answer
+    }
 
 
-TOPICS = {
-    "add": add,
-    "sub": sub,
-    "mul": mul,
-    "div": div,
+TOPIC_MAP = {
+
+    "addition": addition,
+
+    "subtraction": subtraction,
+
+    "multiplication": multiplication,
+
+    "division": division,
+
     "square": square,
+
     "cube": cube,
-    "percent": percent,
-    "bodmas": bodmas,
+
+    "percentage": percentage,
+
+    "bodmas": bodmas
+
 }
 
-def allowed_topics(level: int):
-    if level<=3: return ["add","sub"]
-    if level<=6: return ["add","sub","mul"]
-    if level<=10: return ["add","sub","mul","div","square","percent"]
-    return list(TOPICS.keys())
+
+def mixed_question(level):
+
+    generator = random.choice([
+
+        addition,
+        subtraction,
+        multiplication,
+        division,
+        square,
+        cube,
+        percentage,
+        bodmas
+
+    ])
+
+    return generator(level)
 
 
-def generate(level: int, qtype: str="mixed") -> Dict[str,int]:
-    attempts = 0
-    while attempts < 10:
-        topic = random.choice(allowed_topics(level)) if qtype=="mixed" else qtype
-        q, a = TOPICS[topic](level)
-        if _remember(topic, q):
-            return {"topic": topic, "question": q, "answer": a}
-        attempts += 1
-    # fallback
-    return {"topic": topic, "question": q, "answer": a}
+def generate_question(level, topic="mixed"):
+
+    if topic != "mixed":
+
+        generator = TOPIC_MAP.get(topic)
+
+        if generator:
+
+            return generator(level)
+
+    return mixed_question(level)
